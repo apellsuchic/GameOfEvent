@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height 40px;
+        z-index: 10;
+        
+      }
+    .containerT{
+      display: flex;
+      padding-top: 50px;
+    }
+  
+    .input-area {
+      margin-right: 10%;
+      height: 10%;
+    }
+      .images-container {
+        display: flex;
+        flex-direction: column;
+        width 10%;
+      }
+      .images-container h2 {
+        text-align: center;
+      }
+      .as {
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        width: 90%;
+        height: 90%;
+        margin-bottom: 10px;
+        margin-bottom: 10px;
+      }
+      #zones-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+    
+      .stat-item {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+  </style>
+  <header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">Рабочая платформа</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end"
+             id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/index">Новый проект</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/remov">Удаление проекта</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">Обо мне</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/exit">Выход</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/learn">Изменение данных</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+  <div class="containerT">
+    <div class="input-area">
+    <form action="/graf" method="POST">
+      <label for="date">Укажите период:</label><br>
+      <input type="date" id="date" name="date1" placeholder="2024-09-01" autocomplete="off" style="width: 200px;  margin-top: 5px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;" required><br><br>
+      <input type="date" id="date" name="date2" placeholder="2024-09-31" autocomplete="off" style="width: 200px;  margin-top: 5px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;" required><br><br>
+      <input type="submit" value="Показать">
+    </form>
+    {% if data %}
+    <br><ul id="zones-list">
+      <li>
+        <div class="stat-item">Проекты за этот период: {{ data[0] }}</div>
+      </li>
+      <li>
+        <div class="stat-item">Выезд зон за этот период: {{ data[1] }}</div>
+      </li>
+      <li>
+        <div class="stat-item">Всего проектов: {{ data[2] }}</div>
+      </li>
+      <li>
+        <div class="stat-item">Всего зон: {{ data[3] }}</div>
+      </li>
+    </ul>
+  {% endif %}
+    </div>
+    <div class="images-container">
+      <h2>Проекты и количество зон на них</h2><br>
+      <img  class='as' src="/static/count_zone.jpg"><br>
+      <h2>Количество выездов зон по категориям</h2><br>
+      <img  class='as' src="/static/category_zone.jpg"><br>
+      <h2>Количество выездов каждой зоны за период</h2><br>
+      <img  class='as' src="/static/project_zone.jpg"><br>
+      <h2>Количество выездов работников по проектам</h2><br>
+      <img  class='as' src="/static/count_work.jpg">
+    </div>
+  </div>   
+{% endblock %}
