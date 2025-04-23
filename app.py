@@ -9,7 +9,7 @@ import seaborn as sns
 
 app = Flask(__name__)
 app.secret_key = '' # Нужен свой ключ
-DB_PATH = '/home/data.sqlite' # Путь к базе данных.
+DB_PATH = './data.sqlite' # Путь к базе данных.
 
 @app.route('/add_dell', methods=['POST'])
 def work_witd_data():
