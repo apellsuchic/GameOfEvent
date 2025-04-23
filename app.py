@@ -8,8 +8,8 @@ import seaborn as sns
 
 
 app = Flask(__name__)
-app.secret_key = '2q9w6e7r4t4T8'
-DB_PATH = '/home/alexandr/Table_for_work/data.sqlite'
+app.secret_key = '' # Нужен свой ключ
+DB_PATH = '/home/data.sqlite' # Путь к базе данных.
 
 @app.route('/add_dell', methods=['POST'])
 def work_witd_data():
@@ -90,7 +90,9 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        users = {'s': '111'}
+        users = {'sasha': '222'} # Логин и пароль для входа
+        # Лучше эти данные хранить в отдельном файле, чтобы использовать перменные,
+        # а не сами значения.
         for i, k in users.items():
             if i == username and k == password:
                 session['logged_in'] = True

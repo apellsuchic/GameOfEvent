@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height 40px;
+        z-index: 10;
+        
+      }
+    .error-message{
+      width: 200px}
+  
+  
+    .containerT{
+      display: flex;
+      padding-top: 50px;
+    }
+  
+    .input-area {
+      margin-right: 20px;
+    }
+  
+    .mes-message{
+      width: 200px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+      }
+      
+      th {
+        background-color: #f0f0f0;
+      }
+  </style>
+  <header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">Рабочая платформа</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end"
+             id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/index">Новый проект</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/stat">Общая статистика</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">Обо мне</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/exit">Выход</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/learn">Изменение данных</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</header>
+  <div class="containerT">
+  <div class="input-area">
+    <form action="/remove_project" method="POST">
+      <label for="date">ID Проекта:</label><br>
+      <input type="text" id="id" name="id" placeholder="56" autocomplete="off" style="width: 200px;  margin-top: 5px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;" required><br><br>
+      <input type="submit" value="Удалить">
+    </form>
+  </div>
+    <div class="data-list">
+        <h3>Недавние проекты</h3>
+        <table id="projectTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Дата</th>
+                    <th>Зона</th>
+                    <th>Рабочий</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Здесь будут добавляться строки с данными -->
+            </tbody>
+        </table>
+    </div>
+  </div>
+<script>
+    function updateProjectTable(data) {
+        const tableBody = document.getElementById('projectTable').getElementsByTagName('tbody')[0];
+        tableBody.innerHTML = ''; // Очищаем таблицу
+      
+        data.forEach(item => {
+          const row = tableBody.insertRow();
+          const idCell = row.insertCell();
+          const dateCell = row.insertCell();
+          const zoneCell = row.insertCell();
+          const workerCell = row.insertCell();
+      
+          idCell.textContent = item.id;
+          dateCell.textContent = item.date;
+          zoneCell.textContent = item.zone;
+          workerCell.textContent = item.worker;
+        });
+      }
+      
+      window.onload = function() {
+        //  Загружаем данные с сервера
+        fetch('/get_last_project')
+          .then(response => response.json())
+          .then(data => {
+            updateProjectTable(data); // Обновляем таблицу
+          });
+      };
+</script>
+{% endblock %}
